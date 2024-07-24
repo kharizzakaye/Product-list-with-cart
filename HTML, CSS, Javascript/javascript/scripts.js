@@ -104,10 +104,20 @@ const data = [
 let dessertsList = "";
 data.forEach( dessert => {
     dessertsList += `
-        <div class="col-xl-4">
-            <p> ${dessert["category"]} </p>
-            <p> ${dessert["name"]} </p>
-            <p> $${Number(dessert["price"]).toFixed(2)} </p>
+        <div class="col-xl-4 dessertItemCard">
+            <div>
+                <img class="dessertImage img-fluid" src="${dessert.image.desktop}" alt="Image of ${dessert.name}" />
+            
+                <button class="btn btn-primary addToCartButton"> Add to Cart</button>
+            </div>
+
+
+
+            <div>
+                <p class="dessertDetails"> ${dessert.category} </p>
+                <p class="dessertDetails"> ${dessert.name} </p>
+                <p class="dessertDetails"> $${Number(dessert.price).toFixed(2)} </p>
+            </div>
         </div>
     `
 });

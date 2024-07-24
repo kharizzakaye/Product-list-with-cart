@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap');
+
+.container {
+    margin-top: 60px;
+}
+
+#dessertImage {
+    border: none;
+    /* border-radius: 50px; */
+}
+
+#dessertsTitle {
+    font-weight: 700;
+}
+
+.dessertItemCard {
+    margin-top: 35px;
+}
+
+.addToCartButton {
+    margin-bottom: 15px;
+}
+
+.dessertDetails {
+    margin: 0px;
+}
+
+.dessertThumbnail {
+    width: 100%;
+}
