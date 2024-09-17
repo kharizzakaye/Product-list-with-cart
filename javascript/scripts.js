@@ -1,16 +1,18 @@
 const data = [
     {
-       "image": {
+        "id": "waffle-with-berries",
+        "image": {
             "thumbnail": "./assets/images/image-waffle-thumbnail.jpg",
             "mobile": "./assets/images/image-waffle-mobile.jpg",
             "tablet": "./assets/images/image-waffle-tablet.jpg",
             "desktop": "./assets/images/image-waffle-desktop.jpg"
-       },
-       "name": "Waffle with Berries",
-       "category": "Waffle",
-       "price": 6.50
+        },
+        "name": "Waffle with Berries",
+        "category": "Waffle",
+        "price": 6.50
     },
     {
+        "id": "creme-brulee",
         "image": {
             "thumbnail": "./assets/images/image-creme-brulee-thumbnail.jpg",
             "mobile": "./assets/images/image-creme-brulee-mobile.jpg",
@@ -22,6 +24,7 @@ const data = [
         "price": 7.00
      },
      {
+        "id": "macaron-mix-five",
         "image": {
             "thumbnail": "./assets/images/image-macaron-thumbnail.jpg",
             "mobile": "./assets/images/image-macaron-mobile.jpg",
@@ -33,6 +36,7 @@ const data = [
         "price": 8.00
      },
      {
+        "id": "classic-tiramisu",
         "image": {
             "thumbnail": "./assets/images/image-tiramisu-thumbnail.jpg",
             "mobile": "./assets/images/image-tiramisu-mobile.jpg",
@@ -44,6 +48,7 @@ const data = [
         "price": 5.50
      },
      {
+        "id": "pistachio-baklava",
         "image": {
             "thumbnail": "./assets/images/image-baklava-thumbnail.jpg",
             "mobile": "./assets/images/image-baklava-mobile.jpg",
@@ -55,6 +60,7 @@ const data = [
         "price": 4.00
      },
      {
+        "id": "lemon-meringue-pie",
         "image": {
             "thumbnail": "./assets/images/image-meringue-thumbnail.jpg",
             "mobile": "./assets/images/image-meringue-mobile.jpg",
@@ -66,6 +72,7 @@ const data = [
         "price": 5.00
      },
      {
+        "id": "red-velvet-cake",
         "image": {
             "thumbnail": "./assets/images/image-cake-thumbnail.jpg",
             "mobile": "./assets/images/image-cake-mobile.jpg",
@@ -77,6 +84,7 @@ const data = [
         "price": 4.50
      },
      {
+        "id": "salted-caramel-brownie",
         "image": {
             "thumbnail": "./assets/images/image-brownie-thumbnail.jpg",
             "mobile": "./assets/images/image-brownie-mobile.jpg",
@@ -88,6 +96,7 @@ const data = [
         "price": 4.50
      },
      {
+        "id": "vanilla-panna-cotta",
         "image": {
             "thumbnail": "./assets/images/image-panna-cotta-thumbnail.jpg",
             "mobile": "./assets/images/image-panna-cotta-mobile.jpg",
@@ -106,24 +115,26 @@ data.forEach( dessert => {
     dessertsList += `
         <div 
             class="dessert-item-card" 
-            id=${dessert.name.replace(/ /g, '-').toLowerCase()}-card
+            id="card-${dessert.id}"
         >
             <div>
                 <picture >
-                    <source media="(max-width: 768px)" srcset="${dessert.image.mobile}">
-                    <img class="dessert-image img-fluid" src="${dessert.image.desktop}" alt="Image of ${dessert.name}">
+                    <source media="(min-width: 992px)" srcset="${dessert.image.desktop}">
+                    <source media="(min-width: 768px)" srcset="${dessert.image.tablet}">
+                    <img class="dessert-image img-fluid" src="${dessert.image.mobile}" alt="Image of ${dessert.name}">
                 </picture>
             </div>
 
             <div class="add-cart-btn-container text-center">
                 <button 
                     class="btn btn-light add-cart-btn" 
-                    id="btn-add-cart-${dessert.name.replace(/ /g, '-').toLowerCase()}"
+                    id="btn-${dessert.id}"
                     value="0"
-                    onclick="addToCart(btn-add-cart-${dessert.name.replace(/ /g, '-').toLowerCase()})"dxz
+                    onclick="addToCart('${dessert.id}')"
                 > 
-                    <img src="/assets/images/icon-add-to-cart.svg" alt="">
+                    <span><img src="/assets/images/icon-add-to-cart.svg" alt=""></span>
                     Add to Cart
+                    <span></span>
                 </button>
             </div>
 
@@ -144,12 +155,66 @@ console.log(dessertsList)
 document.querySelector("#desserts-list").innerHTML = dessertsList;
 
 
-const addToCart = (foodId) => {
-    console.log(foodId + " added");
+let cartItems = [];
+
+function addToCart(buttonId) {
+    
+    console.log(buttonId + " added");
+
+    let selectedButton = document.getElementById(`btn-${buttonId}`);
+    let selectedCard = document.getElementById(`card-${buttonId}`);
+
+    if ( selectedButton.value == "0")
+    {
+
+    }
+    else
+    {
+        
+    }
+
+    cartItems.push(buttonId);
+
+    selectedButton.style.backgroundColor = "hsl(14, 86%, 42%)";
+    selectedButton.value = "1";
+    selectedButton.innerHTML = "Added to Cart!"; // temp value
+    selectedButton.style.color = "#FFFFFF";
+
+    // selectedCard.style.backgroundColor = "hsl(14, 86%, 42%)";
+
+
+    console.log("cartItems",cartItems)
+
+    if ( cartItems.length == 0 )
+    {
+        document.getElementById("cart-information").innerHTML = `
+            <div class="text-center" id="empty-cart-image">
+                <img src="/assets/images/illustration-empty-cart.svg" alt="">
+            </div>
+
+            <p class="card-text text-center img-fluid" id="empty-cart-text">Your added items will appear here</p>
+        `;
+    }
+    else
+    {
+        cartItemsDisplay =  "";
+        cartItems.forEach( cartItem => {
+            cartItemsDisplay += `
+                <p>${cartItem}</p>
+                
+            `
+        });
+
+
+        document.getElementById("cart-information").innerHTML = cartItemsDisplay;
+    }
+
+
+    document.getElementById("cart-quantity").innerHTML = `(${cartItems.length})`
 }
 
 // update add to cart button on hover
-let selectedDessert = "";
+// let selectedDessert = "";
 
 // document.addEventListener("mouseover", function(event) {
 //     if (event.target.tagName == "BUTTON")
