@@ -102,9 +102,29 @@ h1 {
     font-size: 30px;
 }
 
+#carbon-neutral-section {
+    display: none;
+    background-color: hsl(20, 50%, 98%);
+    padding: 10px 10px;
+    border-radius: 15px;
+}
+
+.carbon-neutral-items {
+    display: inline-block;
+}
+
 #confirm-order-btn {
     border-radius: 25px;
     display: none;
+    background-color: hsl(14, 86%, 42%);
+    color: #FFFFFF;
+    font-weight: 600;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#confirm-order-btn:hover {
+    background-color: hsl(14, 65%, 9%);
 }
 
 /* Small devices (landscape phones, 576px and up) */

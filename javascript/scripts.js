@@ -121,7 +121,7 @@ data.forEach( dessert => {
                 <picture >
                     <source media="(min-width: 992px)" srcset="${dessert.image.desktop}">
                     <source media="(min-width: 768px)" srcset="${dessert.image.tablet}">
-                    <img class="dessert-image img-fluid" src="${dessert.image.mobile}" alt="Image of ${dessert.name}">
+                    <img id="picture-${dessert.id}" class="dessert-image img-fluid" src="${dessert.image.mobile}" alt="Image of ${dessert.name}">
                 </picture>
             </div>
 
@@ -132,9 +132,10 @@ data.forEach( dessert => {
                     value="0"
                     onclick="addToCart('${dessert.id}')"
                 > 
-                    <span><img src="/assets/images/icon-add-to-cart.svg" alt=""></span>
-                    Add to Cart
-                    <span></span>
+                    <div id=btn-text-${dessert.id}>
+                        <span><img src="/assets/images/icon-add-to-cart.svg" alt=""></span>
+                        Add to Cart
+                    </div>
                 </button>
             </div>
 
@@ -149,20 +150,23 @@ data.forEach( dessert => {
     `
 });
 
-
-
-console.log(dessertsList)
 document.querySelector("#desserts-list").innerHTML = dessertsList;
 
 
+
+// Add to Cart
 let cartItems = [];
 
 function addToCart(buttonId) {
     
-    console.log(buttonId + " added");
+    let ordersList = document.getElementById("cart-information");
+    let confirmOrderButton = document.getElementById("confirm-order-btn");
+    let carbonNeutralSection = document.getElementById("carbon-neutral-section");
 
     let selectedButton = document.getElementById(`btn-${buttonId}`);
+    let selectedButtonText = document.getElementById(`btn-text-${buttonId}`);
     let selectedCard = document.getElementById(`card-${buttonId}`);
+    let selectedImage = document.getElementById(`picture-${buttonId}`);
 
     if ( selectedButton.value == "0")
     {
@@ -177,23 +181,29 @@ function addToCart(buttonId) {
 
     selectedButton.style.backgroundColor = "hsl(14, 86%, 42%)";
     selectedButton.value = "1";
-    selectedButton.innerHTML = "Added to Cart!"; // temp value
+    selectedButtonText.innerHTML = `
+        <span><img src="/assets/images/icon-decrement-quantity.svg" alt=""></span>
+        1
+        <span><img src="/assets/images/icon-increment-quantity.svg" alt=""></span>
+    `;
     selectedButton.style.color = "#FFFFFF";
 
-    // selectedCard.style.backgroundColor = "hsl(14, 86%, 42%)";
+    selectedImage.style.border = "3px solid hsl(14, 86%, 42%)";
 
-
-    console.log("cartItems",cartItems)
+    // console.log("cartItems",cartItems)
 
     if ( cartItems.length == 0 )
     {
-        document.getElementById("cart-information").innerHTML = `
+        ordersList.innerHTML = `
             <div class="text-center" id="empty-cart-image">
                 <img src="/assets/images/illustration-empty-cart.svg" alt="">
             </div>
 
             <p class="card-text text-center img-fluid" id="empty-cart-text">Your added items will appear here</p>
         `;
+
+        carbonNeutralSection.style.display = "none";
+        confirmOrderButton.style.display = "none";
     }
     else
     {
@@ -201,12 +211,16 @@ function addToCart(buttonId) {
         cartItems.forEach( cartItem => {
             cartItemsDisplay += `
                 <p>${cartItem}</p>
-                
+                <hr/>
             `
         });
 
 
-        document.getElementById("cart-information").innerHTML = cartItemsDisplay;
+
+        ordersList.innerHTML = cartItemsDisplay;
+
+        carbonNeutralSection.style.display = "block";
+        confirmOrderButton.style.display = "block";
     }
 
 
