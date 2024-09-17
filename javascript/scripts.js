@@ -116,7 +116,12 @@ data.forEach( dessert => {
             </div>
 
             <div class="add-cart-btn-container text-center">
-                <button class="btn btn-light add-cart-btn" id="btn-add-cart-${dessert.name.replace(/ /g, '-').toLowerCase()}"> 
+                <button 
+                    class="btn btn-light add-cart-btn" 
+                    id="btn-add-cart-${dessert.name.replace(/ /g, '-').toLowerCase()}"
+                    value="0"
+                    onclick="addToCart(btn-add-cart-${dessert.name.replace(/ /g, '-').toLowerCase()})"dxz
+                > 
                     <img src="/assets/images/icon-add-to-cart.svg" alt="">
                     Add to Cart
                 </button>
@@ -139,24 +144,33 @@ console.log(dessertsList)
 document.querySelector("#desserts-list").innerHTML = dessertsList;
 
 
+const addToCart = (foodId) => {
+    console.log(foodId + " added");
+}
 
 // update add to cart button on hover
-document.addEventListener("mouseover", function(event) {
-    if (event.target.tagName == "BUTTON")
-    {
-        console.log("id: ", event.target.id);
-    }
+let selectedDessert = "";
+
+// document.addEventListener("mouseover", function(event) {
+//     if (event.target.tagName == "BUTTON")
+//     {
+//         console.log("id: ", event.target.id);
+//         selectedDessert = event.target.id;
+//     }
    
-})
-
-// const addToCartButton = document.getElementById("add-cart-btn");
-
-// addToCartButton.addEventListener('mouseover', function ()
-// {
-
+//     document.getElementById(selectedDessert).innerHTML = 
+//     `
+//         <img src="/assets/images/icon-decrement-quantity.svg">
+//         1
+//         <img src="/assets/images/icon-increment-quantity.svg">
+//     `;
 // });
 
-// button.addEventListener('mouseout', function () 
-// {
-//     button.style.backgroundColor = 'initial';
+// document.addEventListener("mouseout", function(event) {
+//     if (event.target.tagName == "BUTTON")
+//     {
+//         selectedDessert = event.target.id;
+//     }
+   
+//     document.getElementById(selectedDessert).textContent = `Add to Cart`;
 // });
