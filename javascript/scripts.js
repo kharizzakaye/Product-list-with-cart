@@ -104,28 +104,56 @@ const data = [
 let dessertsList = "";
 data.forEach( dessert => {
     dessertsList += `
-        <div class="dessertItemCard">
+        <div 
+            class="dessert-item-card" 
+            id=${dessert.name.replace(/ /g, '-').toLowerCase()}-card
+        >
             <div>
                 <img class="dessert-image img-fluid" src="${dessert.image.desktop}" alt="Image of ${dessert.name}" />
             </div>
 
             <div class="add-cart-btn-container text-center">
-                <button class="btn btn-light add-cart-btn"> 
+                <button class="btn btn-light add-cart-btn" id="btn-add-cart-${dessert.name.replace(/ /g, '-').toLowerCase()}"> 
                     <img src="/assets/images/icon-add-to-cart.svg" alt="">
                     Add to Cart
                 </button>
             </div>
 
-
-
             <div>
-                <p class="dessert-details food-type"> ${dessert.category} </p>
-                <p class="dessert-details food-name"> ${dessert.name} </p>
-                <p class="dessert-details food-price"> $${Number(dessert.price).toFixed(2)} </p>
+                <p class="dessert-details food-type">${dessert.category}</p>
+                <p class="dessert-details food-name">${dessert.name}</p>
+                <p class="dessert-details food-price">$${Number(dessert.price).toFixed(2)}</p>
             </div>
         </div>
+
+        
     `
 });
 
 
+
+console.log(dessertsList)
 document.querySelector("#desserts-list").innerHTML = dessertsList;
+
+
+
+// update add to cart button on hover
+document.addEventListener("mouseover", function(event) {
+    if (event.target.tagName == "BUTTON")
+    {
+        console.log("id: ", event.target.id);
+    }
+   
+})
+
+// const addToCartButton = document.getElementById("add-cart-btn");
+
+// addToCartButton.addEventListener('mouseover', function ()
+// {
+
+// });
+
+// button.addEventListener('mouseout', function () 
+// {
+//     button.style.backgroundColor = 'initial';
+// });

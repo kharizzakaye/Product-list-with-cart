@@ -20,9 +20,26 @@ h1 {
     color: hsl(14, 65%, 9%);
 }
 
+.dessert-item-card {
+    position: relative;
+}
+
+.add-cart-btn-container {
+    position: absolute;
+    width: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 
 .dessert-image {
     border-radius: 15px;
+}
+
+.add-cart-btn {
+    border-radius: 25px;
+    border-color: hsl(14, 25%, 72%);
+    padding: 8px 25px 8px 25px;
+    font-weight: 600;
 }
 
 .dessert-details {
@@ -32,6 +49,7 @@ h1 {
 .food-type {
     color:hsl(7, 20%, 60%);
     font-weight: 400;
+    margin-top: 40px;
 }
 
 .food-name {
@@ -51,14 +69,7 @@ h1 {
 
 }
 
-.add-cart-btn {
-    border-radius: 25px;
-    border-color: hsl(14, 25%, 72%);
-    padding: 8px 25px 8px 25px;
-    font-weight: 600;
 
-    
-}
 
 .add-cart-btn:hover {
     border-color: hsl(14, 86%, 42%);
@@ -100,9 +111,6 @@ h1 {
     font-weight: 700;
 }
 
-.dessertItemCard {
-    margin-top: 35px;
-}
 
 
 
