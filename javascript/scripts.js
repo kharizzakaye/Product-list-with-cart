@@ -104,19 +104,24 @@ const data = [
 let dessertsList = "";
 data.forEach( dessert => {
     dessertsList += `
-        <div class="col-xl-4 dessertItemCard">
+        <div class="dessertItemCard">
             <div>
-                <img class="dessertImage img-fluid" src="${dessert.image.desktop}" alt="Image of ${dessert.name}" />
-            
-                <button class="btn btn-primary addToCartButton"> Add to Cart</button>
+                <img class="dessert-image img-fluid" src="${dessert.image.desktop}" alt="Image of ${dessert.name}" />
+            </div>
+
+            <div class="add-cart-btn-container text-center">
+                <button class="btn btn-light add-cart-btn"> 
+                    <img src="/assets/images/icon-add-to-cart.svg" alt="">
+                    Add to Cart
+                </button>
             </div>
 
 
 
             <div>
-                <p class="dessertDetails"> ${dessert.category} </p>
-                <p class="dessertDetails"> ${dessert.name} </p>
-                <p class="dessertDetails"> $${Number(dessert.price).toFixed(2)} </p>
+                <p class="dessert-details food-type"> ${dessert.category} </p>
+                <p class="dessert-details food-name"> ${dessert.name} </p>
+                <p class="dessert-details food-price"> $${Number(dessert.price).toFixed(2)} </p>
             </div>
         </div>
     `

@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap');
+
+body {
+    margin: 0px;
+    padding: 0px;
+    font-size: 16px;
+    background-color: hsl(20, 50%, 98%);
+}
+
+.container {
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+h1 {
+    font-weight: 700;
+    font-family: "Red Hat Text", sans-serif;
+    font-style: normal;
+    margin-bottom: 30px;
+    color: hsl(14, 65%, 9%);
+}
+
+
+.dessert-image {
+    border-radius: 15px;
+}
+
+.dessert-details {
+    margin: 0px;
+}
+
+.food-type {
+    color:hsl(7, 20%, 60%);
+    font-weight: 400;
+}
+
+.food-name {
+    color: hsl(14, 65%, 9%);
+    font-weight: 700;
+    font-size: 17px;
+}
+
+.food-price {
+    color: hsl(14, 86%, 42%);
+    font-weight: 600;
+    font-size: 17px;
+}
+
+.add-cart-btn-container {
+    margin-bottom: 20px;
+
+}
+
+.add-cart-btn {
+    border-radius: 25px;
+    border-color: hsl(14, 25%, 72%);
+    padding: 8px 25px 8px 25px;
+    font-weight: 600;
+
+    
+}
+
+.add-cart-btn:hover {
+    border-color: hsl(14, 86%, 42%);
+    background-color: hsl(14, 86%, 42%);
+}
+
+
+.cart-section-card {
+    border: none;
+}
+
+#empty-cart-image {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+#empty-cart-text {
+    color:  hsl(7, 20%, 60%);
+    font-weight: 600;
+}
+
+.cart-main-title {
+    color: hsl(14, 86%, 42%);
+    font-weight: 700;
+    font-size: 20px;
+}
+
+#confirm-order-btn {
+    border-radius: 25px;
+    display: none;
+}
+
+/* 
+#dessertImage {
+    border: none;
+}
+
+#dessertsTitle {
+    font-weight: 700;
+}
+
+.dessertItemCard {
+    margin-top: 35px;
+}
+
+
+
+.dessertDetails {
+    margin: 0px;
+}
+
+.dessertThumbnail {
+    width: 100%;
+} */
