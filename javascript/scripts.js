@@ -110,7 +110,7 @@ data.forEach( dessert => {
         >
             <div>
                 <picture >
-                    <source media="(max-width: 576px)" srcset="${dessert.image.mobile}">
+                    <source media="(max-width: 768px)" srcset="${dessert.image.mobile}">
                     <img class="dessert-image img-fluid" src="${dessert.image.desktop}" alt="Image of ${dessert.name}">
                 </picture>
             </div>
