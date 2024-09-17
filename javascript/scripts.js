@@ -109,7 +109,10 @@ data.forEach( dessert => {
             id=${dessert.name.replace(/ /g, '-').toLowerCase()}-card
         >
             <div>
-                <img class="dessert-image img-fluid" src="${dessert.image.desktop}" alt="Image of ${dessert.name}" />
+                <picture >
+                    <source media="(max-width: 576px)" srcset="${dessert.image.mobile}">
+                    <img class="dessert-image img-fluid" src="${dessert.image.desktop}" alt="Image of ${dessert.name}">
+                </picture>
             </div>
 
             <div class="add-cart-btn-container text-center">

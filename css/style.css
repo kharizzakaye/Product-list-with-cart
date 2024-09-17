@@ -20,6 +20,7 @@ h1 {
     color: hsl(14, 65%, 9%);
 }
 
+/* Desserts */
 .dessert-item-card {
     position: relative;
 }
@@ -69,14 +70,12 @@ h1 {
 
 }
 
-
-
 .add-cart-btn:hover {
     border-color: hsl(14, 86%, 42%);
     background-color: hsl(14, 86%, 42%);
 }
 
-
+/* Cart - sidebar */
 .cart-section-card {
     border: none;
 }
@@ -102,22 +101,105 @@ h1 {
     display: none;
 }
 
-/* 
-#dessertImage {
-    border: none;
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+    
 }
 
-#dessertsTitle {
-    font-weight: 700;
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    
 }
 
-
-
-
-.dessertDetails {
-    margin: 0px;
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    
 }
 
-.dessertThumbnail {
-    width: 100%;
-} */
+/* X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    h1 {
+        font-weight: 700;
+        font-style: normal;
+        margin-bottom: 30px;
+    }
+    
+    /* Desserts */
+    .dessert-item-card {
+        position: relative;
+    }
+    
+    .add-cart-btn-container {
+        position: absolute;
+        width: 100%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    .dessert-image {
+        border-radius: 15px;
+    }
+    
+    .add-cart-btn {
+        border-radius: 25px;
+        padding: 8px 25px 8px 25px;
+        font-weight: 600;
+    }
+    
+    .dessert-details {
+        margin: 0px;
+    }
+    
+    .food-type {
+        font-weight: 400;
+        margin-top: 40px;
+    }
+    
+    .food-name {
+        font-weight: 700;
+        font-size: 17px;
+    }
+    
+    .food-price {
+        font-weight: 600;
+        font-size: 17px;
+    }
+    
+    .add-cart-btn-container {
+        margin-bottom: 20px;
+    
+    }
+    
+    .add-cart-btn:hover {
+
+    }
+    
+    /* Cart - sidebar */
+    .cart-section-card {
+        border: none;
+    }
+    
+    #empty-cart-image {
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+    
+    #empty-cart-text {
+        font-weight: 600;
+    }
+    
+    .cart-main-title {
+        font-weight: 700;
+        font-size: 20px;
+    }
+    
+    #confirm-order-btn {
+        border-radius: 25px;
+        display: none;
+    }
+}
+
+/* XX-Large devices (larger desktops, 1400px and up) */
+@media (min-width: 1400px) {
+    
+}
