@@ -184,15 +184,27 @@ document.querySelector("#desserts-list").innerHTML = dessertsList;
 
 
 
+let ordersList = document.getElementById("cart-information");
+let cartQuantity = document.getElementById("cart-quantity");
+let grandTotal = document.getElementById("orders-total-amount");
+let confirmOrderButton = document.getElementById("confirm-order-btn");
+let carbonNeutralSection = document.getElementById("carbon-neutral-section");
+let totalAmountSection = document.getElementById("order-total-section");
+
+const emptyOrdersList = `
+    <div class="text-center" id="empty-cart-image">
+        <img src="/assets/images/illustration-empty-cart.svg" alt="">
+    </div>
+
+    <p class="card-text text-center img-fluid" id="empty-cart-text">Your added items will appear here</p>
+`;
+
+
 // Add to Cart
 let cartItems = [];
 
 function itemsDisplayOnCart()
 {
-    let ordersList = document.getElementById("cart-information");
-    let cartQuantity = document.getElementById("cart-quantity");
-    let grandTotal = document.getElementById("orders-total-amount");
-
     cartItemsDisplay =  "";
 
     for (let i=0; i< cartItems.length; i++)
@@ -235,16 +247,10 @@ function itemsDisplayOnCart()
 
 function addToCart(buttonId) 
 {
-    let confirmOrderButton = document.getElementById("confirm-order-btn");
-    let carbonNeutralSection = document.getElementById("carbon-neutral-section");
-    let totalAmountSection = document.getElementById("order-total-section");
-
     let selectedButton = document.getElementById(`btn-${buttonId}`);
     let selectedQuantityContainer = document.getElementById(`qty-container-${buttonId}`);
     let quantityValue = document.getElementById(`qty-value-${buttonId}`);
-
     let selectedImage = document.getElementById(`picture-${buttonId}`);
-
 
     // hide add to cart button 
     selectedButton.style.display = "none";
@@ -257,7 +263,6 @@ function addToCart(buttonId)
 
     // set quantity to 1
     quantityValue.innerHTML = "1";
-
 
     // add item to cart
     const itemDetails = data.filter(food => food.id === buttonId);
@@ -287,11 +292,6 @@ function decreaseQuantity(buttonId)
     let selectedButton = document.getElementById(`btn-${buttonId}`);
     let selectedQuantityContainer = document.getElementById(`qty-container-${buttonId}`);
 
-    let ordersList = document.getElementById("cart-information");
-    let confirmOrderButton = document.getElementById("confirm-order-btn");
-    let carbonNeutralSection = document.getElementById("carbon-neutral-section");
-    let totalAmountSection = document.getElementById("order-total-section");
-
     newQuantity = Number(decreaseValue.textContent) - 1;
 
     // update styles
@@ -319,13 +319,7 @@ function decreaseQuantity(buttonId)
 
         if (cartItems.length == 0)
         {
-            ordersList.innerHTML = `
-                <div class="text-center" id="empty-cart-image">
-                    <img src="/assets/images/illustration-empty-cart.svg" alt="">
-                </div>
-
-                <p class="card-text text-center img-fluid" id="empty-cart-text">Your added items will appear here</p>
-            `;
+            ordersList.innerHTML = emptyOrdersList;
 
             carbonNeutralSection.style.display = "none";
             confirmOrderButton.style.display = "none";
@@ -396,4 +390,41 @@ function confirmOrder()
     });
 
     confirmationGrandTotal.innerHTML = `$${Number(confirmationGrandTotalAmount).toFixed(2)}`;
+}
+
+function startNewOrder()
+{
+    let selectedButton;
+    let selectedQuantityContainer;
+    let quantityValue;
+    let selectedImage;
+
+    // reset selections and cart
+    for (let i=0; i<cartItems.length; i++)
+    {
+        selectedButton = document.getElementById(`btn-${cartItems[i].id}`);
+        selectedQuantityContainer = document.getElementById(`qty-container-${cartItems[i].id}`);
+        quantityValue = document.getElementById(`qty-value-${cartItems[i].id}`);
+        selectedImage = document.getElementById(`picture-${cartItems[i].id}`);
+
+        // remove border to selected food
+        selectedImage.style.border = "none";
+
+        // show add to cart button 
+        selectedButton.style.display = "inline-block";
+
+        // hide quantity buttons
+        selectedQuantityContainer.style.display = "none";
+
+    }
+
+    cartItems = [];
+
+    cartItemsDisplay = [];
+    ordersList.innerHTML = emptyOrdersList;
+
+    cartQuantity.innerHTML = "(0)"
+    carbonNeutralSection.style.display = "none";
+    confirmOrderButton.style.display = "none";
+    totalAmountSection.style.display = "none";
 }
