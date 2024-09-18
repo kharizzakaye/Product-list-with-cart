@@ -42,9 +42,62 @@ h1 {
 .add-cart-btn {
     border-radius: 30px;
     border-color: hsl(14, 25%, 72%);
-    padding: 15px 25px 15px 25px;
+    padding: 10px 20px 10px 20px;
     font-weight: 600;
     font-size: 22px;
+
+    width: 200px;
+    height: 55px;
+}
+
+.quantityContainer {
+    border-radius: 30px;
+    border-color: hsl(14, 25%, 72%);
+    padding: 10px 20px 10px 20px;
+    font-weight: 600;
+    font-size: 22px;
+
+    width: 200px;
+    height: 55px;
+    background-color: hsl(14, 86%, 42%);
+    display: none;
+}
+
+.decreaseQuantity {
+    /* display: inline-block; */
+    float: left;
+    border-radius: 50px;
+    border: 1px solid #FFFFFF;
+    background-color: hsl(14, 86%, 42%);
+    padding: 0px 9px 0px 9px;
+    color: #FFFFFF;
+}
+
+.quantityText {
+    display: inline-block;
+    color: #FFFFFF;
+}
+
+.increaseQuantity {
+    /* display: inline-block; */
+    float: right;
+    border-radius: 50px;
+    border: 1px solid #FFFFFF;
+    background-color: hsl(14, 86%, 42%);
+    padding: 0px 7px 0px 7px;
+    color: #FFFFFF;
+}
+
+.decreaseQuantity:hover {
+    border: 1px solid hsl(14, 86%, 42%);
+    background-color: #FFFFFF;
+    color: hsl(14, 86%, 42%);
+}
+
+.increaseQuantity:hover {
+    border: 1px solid hsl(14, 86%, 42%);
+    background-color: #FFFFFF;
+    color: hsl(14, 86%, 42%);
 }
 
 .dessert-details {
@@ -77,6 +130,7 @@ h1 {
 
 .add-cart-btn:hover {
     border-color: hsl(14, 86%, 42%);
+    color: hsl(14, 86%, 42%);
 }
 
 /* Cart - sidebar */
@@ -163,6 +217,19 @@ h1 {
         padding: 8px 25px 8px 25px;
         font-weight: 600;
         font-size: 16px;
+
+        width: 170px;
+        height: 45px;
+    }
+
+    .quantityContainer {
+        border-radius: 25px;
+        padding: 8px 25px 8px 25px;
+        font-weight: 600;
+        font-size: 16px;
+
+        width: 170px;
+        height: 45px;
     }
     
     .dessert-details {

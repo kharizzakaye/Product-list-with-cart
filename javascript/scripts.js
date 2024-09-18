@@ -137,6 +137,37 @@ data.forEach( dessert => {
                         Add to Cart
                     </div>
                 </button>
+
+                <div class="quantityContainer" id="qty-container-${dessert.id}">
+                    <button 
+                        class="decreaseQuantity"
+                        id="btn-decrease-${dessert.id}"
+                        onclick="decreaseQuantity('${dessert.id}')"
+                    >
+                    -
+                    </button>
+
+                    <p 
+                        class="quantityText"
+                        id="qty-value-${dessert.id}"
+                        value="{
+                            'id': ${dessert.id},
+                            'name': ${dessert.name},
+                            'price': ${dessert.price},
+                            'image': ${dessert.image.desktop},
+                        }"
+                    >
+                    1
+                    </p>
+
+                    <button 
+                        class="increaseQuantity"
+                        id="btn-increase-${dessert.id}"
+                        onclick="increaseQuantity('${dessert.id}')"
+                    >
+                        +
+                    </button>
+                </div>
             </div>
 
             <div>
@@ -157,40 +188,29 @@ document.querySelector("#desserts-list").innerHTML = dessertsList;
 // Add to Cart
 let cartItems = [];
 
-function addToCart(buttonId) {
-    
+function addToCart(buttonId) 
+{
     let ordersList = document.getElementById("cart-information");
     let confirmOrderButton = document.getElementById("confirm-order-btn");
     let carbonNeutralSection = document.getElementById("carbon-neutral-section");
 
     let selectedButton = document.getElementById(`btn-${buttonId}`);
-    let selectedButtonText = document.getElementById(`btn-text-${buttonId}`);
-    let selectedCard = document.getElementById(`card-${buttonId}`);
+    let selectedQuantityContainer = document.getElementById(`qty-container-${buttonId}`);
+
     let selectedImage = document.getElementById(`picture-${buttonId}`);
-
-    if ( selectedButton.value == "0")
-    {
-
-    }
-    else
-    {
-        
-    }
 
     cartItems.push(buttonId);
 
-    selectedButton.style.backgroundColor = "hsl(14, 86%, 42%)";
-    selectedButton.value = "1";
-    selectedButtonText.innerHTML = `
-        <span><img src="/assets/images/icon-decrement-quantity.svg" alt=""></span>
-        1
-        <span><img src="/assets/images/icon-increment-quantity.svg" alt=""></span>
-    `;
-    selectedButton.style.color = "#FFFFFF";
+    // hide add to cart button 
+    selectedButton.style.display = "none";
 
+    // show quantity buttons
+    selectedQuantityContainer.style.display = "inline-block";
+
+    // add border to selected food
     selectedImage.style.border = "3px solid hsl(14, 86%, 42%)";
 
-    // console.log("cartItems",cartItems)
+    console.log("cartItems",cartItems)
 
     if ( cartItems.length == 0 )
     {
@@ -227,29 +247,43 @@ function addToCart(buttonId) {
     document.getElementById("cart-quantity").innerHTML = `(${cartItems.length})`
 }
 
-// update add to cart button on hover
-// let selectedDessert = "";
+function decreaseQuantity(buttonId)
+{
+    let decreaseValue = document.getElementById(`qty-value-${buttonId}`);
+    let selectedImage = document.getElementById(`picture-${buttonId}`);
+    let selectedButton = document.getElementById(`btn-${buttonId}`);
+    let selectedQuantityContainer = document.getElementById(`qty-container-${buttonId}`);
 
-// document.addEventListener("mouseover", function(event) {
-//     if (event.target.tagName == "BUTTON")
-//     {
-//         console.log("id: ", event.target.id);
-//         selectedDessert = event.target.id;
-//     }
-   
-//     document.getElementById(selectedDessert).innerHTML = 
-//     `
-//         <img src="/assets/images/icon-decrement-quantity.svg">
-//         1
-//         <img src="/assets/images/icon-increment-quantity.svg">
-//     `;
-// });
+    newQuantity = Number(decreaseValue.textContent) - 1;
 
-// document.addEventListener("mouseout", function(event) {
-//     if (event.target.tagName == "BUTTON")
-//     {
-//         selectedDessert = event.target.id;
-//     }
-   
-//     document.getElementById(selectedDessert).textContent = `Add to Cart`;
-// });
+    // update styles
+    if (newQuantity == 0)
+    {
+        decreaseValue.innerHTML = newQuantity;
+
+        // remove border to selected food
+        selectedImage.style.border = "none";
+
+        // show add to cart button 
+        selectedButton.style.display = "inline-block";
+
+        // hide quantity buttons
+        selectedQuantityContainer.style.display = "none";
+
+        // remove item to cart
+
+    }
+    else
+    {
+        decreaseValue.innerHTML = newQuantity;
+    }
+}
+
+function increaseQuantity(buttonId)
+{
+    let increaseValue = document.getElementById(`qty-value-${buttonId}`);
+
+    newQuantity = Number(increaseValue.textContent) + 1;
+
+    increaseValue.innerHTML = newQuantity;
+}
