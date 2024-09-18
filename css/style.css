@@ -7,6 +7,10 @@ body {
     background-color: hsl(20, 50%, 98%);
 }
 
+hr {
+    margin: 0px;
+}
+
 .container {
     
     margin-bottom: 100px;
@@ -153,7 +157,36 @@ h1 {
 .cart-main-title {
     color: hsl(14, 86%, 42%);
     font-weight: 700;
-    font-size: 30px;
+    font-size: 37px;
+}
+
+.cart-name {
+    font-weight: 700;
+    margin-bottom: 0px;
+    margin-top: 10px;
+    font-size: 22px;
+}
+
+.cart-quantity {
+    display: inline-block;
+    font-weight: 700;
+    color: hsl(14, 86%, 42%);
+    font-size: 20px;
+}
+
+.cart-price {
+    display: inline-block;
+    margin-left: 20px;
+    color: hsl(7, 20%, 60%);
+    font-size: 18px;
+}
+
+.cart-subtotal {
+    display: inline-block;
+    color: hsl(12, 20%, 44%);
+    margin-left: 15px;
+    font-weight: 700;
+    font-size: 20px;
 }
 
 #carbon-neutral-section {
@@ -173,8 +206,9 @@ h1 {
     background-color: hsl(14, 86%, 42%);
     color: #FFFFFF;
     font-weight: 600;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 20px;
 }
 
 #confirm-order-btn:hover {
@@ -282,18 +316,59 @@ h1 {
     
     .cart-main-title {
         font-weight: 700;
+        font-size: 22px;
+    }
+
+    .cart-name {
         font-size: 20px;
+    }
+    
+    .cart-quantity {
+        font-size: 18px;
+    }
+    
+    .cart-price {
+        font-size: 16px;
+    }
+    
+    .cart-subtotal {
+        font-size: 18px;
     }
     
     #confirm-order-btn {
         border-radius: 25px;
         display: none;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 18px;
     }
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
+    .cart-name {
+        font-size: 17px;
+    }
     
+    .cart-quantity {
+        font-size: 16px;
+    }
+    
+    .cart-price {
+        font-size: 16px;
+    }
+    
+    .cart-subtotal {
+        font-size: 16px;
+    }
+    
+    #confirm-order-btn {
+        border-radius: 25px;
+        display: none;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        font-size: 17px;
+    }
 }
 
 /* X-Large devices (large desktops, 1200px and up) */

@@ -109,7 +109,6 @@ const data = [
      }
 ];
 
-
 let dessertsList = "";
 data.forEach( dessert => {
     dessertsList += `
@@ -188,18 +187,59 @@ document.querySelector("#desserts-list").innerHTML = dessertsList;
 // Add to Cart
 let cartItems = [];
 
-function addToCart(buttonId) 
+function itemsDisplayOnCart()
 {
     let ordersList = document.getElementById("cart-information");
+    let cartQuantity = document.getElementById("cart-quantity");
+
+    cartItemsDisplay =  "";
+
+    for (let i=0; i< cartItems.length; i++)
+    {
+        if (cartItems[i].quantity == undefined)
+        {
+            cartItems[i].quantity = 1;
+            cartItems[i].subtotal = cartItems[i].price;
+        }
+    }
+
+
+    cartItems.forEach( cartItem => {
+        cartItemsDisplay += `
+            <div class="cart-item-line">
+                <p class="cart-name">${cartItem.name}</p>
+                <p class="cart-quantity">${cartItem.quantity}x</p>
+                <p class="cart-price">@ $${Number(cartItem.price).toFixed(2)}</p>
+                <p class="cart-subtotal">$${Number(cartItem.subtotal).toFixed(2)}</p>
+                <hr/>
+            </div>
+        `
+    });
+
+    ordersList.innerHTML = cartItemsDisplay;
+
+    let calculateTotalQuantity = 0;
+    cartItems.forEach(function(number) 
+    {
+        calculateTotalQuantity += number.quantity;
+    });
+
+    cartQuantity.innerHTML = `(${calculateTotalQuantity})`;
+}
+
+
+
+function addToCart(buttonId) 
+{
     let confirmOrderButton = document.getElementById("confirm-order-btn");
     let carbonNeutralSection = document.getElementById("carbon-neutral-section");
 
     let selectedButton = document.getElementById(`btn-${buttonId}`);
     let selectedQuantityContainer = document.getElementById(`qty-container-${buttonId}`);
+    let quantityValue = document.getElementById(`qty-value-${buttonId}`);
 
     let selectedImage = document.getElementById(`picture-${buttonId}`);
 
-    cartItems.push(buttonId);
 
     // hide add to cart button 
     selectedButton.style.display = "none";
@@ -210,41 +250,27 @@ function addToCart(buttonId)
     // add border to selected food
     selectedImage.style.border = "3px solid hsl(14, 86%, 42%)";
 
-    console.log("cartItems",cartItems)
+    // set quantity to 1
+    quantityValue.innerHTML = "1";
 
+
+    // add item to cart
+    const itemDetails = data.filter(food => food.id === buttonId);
+    cartItems.push(itemDetails[0]);
+
+    // hide empty cart message
     if ( cartItems.length == 0 )
     {
-        ordersList.innerHTML = `
-            <div class="text-center" id="empty-cart-image">
-                <img src="/assets/images/illustration-empty-cart.svg" alt="">
-            </div>
-
-            <p class="card-text text-center img-fluid" id="empty-cart-text">Your added items will appear here</p>
-        `;
-
         carbonNeutralSection.style.display = "none";
         confirmOrderButton.style.display = "none";
     }
-    else
+    else // show cart items
     {
-        cartItemsDisplay =  "";
-        cartItems.forEach( cartItem => {
-            cartItemsDisplay += `
-                <p>${cartItem}</p>
-                <hr/>
-            `
-        });
-
-
-
-        ordersList.innerHTML = cartItemsDisplay;
+        itemsDisplayOnCart();
 
         carbonNeutralSection.style.display = "block";
         confirmOrderButton.style.display = "block";
     }
-
-
-    document.getElementById("cart-quantity").innerHTML = `(${cartItems.length})`
 }
 
 function decreaseQuantity(buttonId)
@@ -253,6 +279,10 @@ function decreaseQuantity(buttonId)
     let selectedImage = document.getElementById(`picture-${buttonId}`);
     let selectedButton = document.getElementById(`btn-${buttonId}`);
     let selectedQuantityContainer = document.getElementById(`qty-container-${buttonId}`);
+
+    let ordersList = document.getElementById("cart-information");
+    let confirmOrderButton = document.getElementById("confirm-order-btn");
+    let carbonNeutralSection = document.getElementById("carbon-neutral-section");
 
     newQuantity = Number(decreaseValue.textContent) - 1;
 
@@ -271,11 +301,37 @@ function decreaseQuantity(buttonId)
         selectedQuantityContainer.style.display = "none";
 
         // remove item to cart
+        const removeToCart = cartItems.filter(function (food) {
+            return food.id !== buttonId;
+        });
+        cartItems = removeToCart;
 
+
+        itemsDisplayOnCart();
+
+        if (cartItems.length == 0)
+        {
+            ordersList.innerHTML = `
+                <div class="text-center" id="empty-cart-image">
+                    <img src="/assets/images/illustration-empty-cart.svg" alt="">
+                </div>
+
+                <p class="card-text text-center img-fluid" id="empty-cart-text">Your added items will appear here</p>
+            `;
+
+            carbonNeutralSection.style.display = "none";
+            confirmOrderButton.style.display = "none";
+        }
     }
     else
     {
         decreaseValue.innerHTML = newQuantity;
+
+        const updateQuantity = cartItems.findIndex(any => { return any.id === buttonId; });
+        cartItems[updateQuantity].quantity = newQuantity;
+        cartItems[updateQuantity].subtotal = newQuantity * cartItems[updateQuantity].price;
+
+        itemsDisplayOnCart();
     }
 }
 
@@ -284,6 +340,11 @@ function increaseQuantity(buttonId)
     let increaseValue = document.getElementById(`qty-value-${buttonId}`);
 
     newQuantity = Number(increaseValue.textContent) + 1;
-
     increaseValue.innerHTML = newQuantity;
+
+    const updateQuantity = cartItems.findIndex(any => { return any.id === buttonId; });
+    cartItems[updateQuantity].quantity = newQuantity;
+    cartItems[updateQuantity].subtotal = newQuantity * cartItems[updateQuantity].price;
+
+    itemsDisplayOnCart();
 }
