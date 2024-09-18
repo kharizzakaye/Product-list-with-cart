@@ -357,3 +357,43 @@ function increaseQuantity(buttonId)
 
     itemsDisplayOnCart();
 }
+
+function confirmOrder()
+{
+    let confirmationList = document.getElementById("confirmation-modal-list");
+    let confirmationGrandTotal = document.getElementById("confirmation-grand-total");
+    let confirmItemsDisplay =  "";
+
+    cartItems.forEach( cartItem => {
+        confirmItemsDisplay += `
+             <div class="row cart-item-line">
+                <div class="col-4" id="confirmation-image">
+                    <img class="img-fluid" src="${cartItem.image.desktop}" alt="">
+                </div>
+
+                <div class="col ">
+                    <p class="cart-name">${cartItem.name}</p>
+                    <p class="cart-quantity">${cartItem.quantity}x</p>
+                    <p class="cart-price">@ $${Number(cartItem.price).toFixed(2)}</p>
+                </div>
+
+                <div class="col-2">
+                    <p class="cart-subtotal">$${Number(cartItem.subtotal).toFixed(2)}</p>
+                </div>
+            </div>
+
+            <hr/>
+        `
+    });
+
+    confirmationList.innerHTML = confirmItemsDisplay;
+
+
+    let confirmationGrandTotalAmount = 0;
+    cartItems.forEach(function(number) 
+    {
+        confirmationGrandTotalAmount += number.subtotal;
+    });
+
+    confirmationGrandTotal.innerHTML = `$${Number(confirmationGrandTotalAmount).toFixed(2)}`;
+}

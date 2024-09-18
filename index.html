@@ -29,7 +29,7 @@
                                 <div class="text-center" id="empty-cart-image">
                                     <img src="/assets/images/illustration-empty-cart.svg" alt="">
                                 </div>
-    
+                                
                                 <p class="card-text text-center img-fluid" id="empty-cart-text">Your added items will appear here</p>    
                             </div>
 
@@ -46,9 +46,34 @@
                                     </div>
                                 </div>
 
-                                <a type="button" href="#" class="btn" id="confirm-order-btn">
+                                <a type="button" href="#" class="btn" id="confirm-order-btn" data-bs-toggle="modal" data-bs-target="#confirmModal" onclick="confirmOrder()">
                                     Confirm Order
                                 </a>
+
+                                <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <img id="modal-image" src="/assets/images/icon-order-confirmed.svg" alt="">
+                                                <p id="modal-title">Order Confirmed</p>
+                                                <p id="modal-subtitle">We hope you enjoy your food!</p>
+
+                                                <div id="confirmation-modal-list" class="confirmation-modal-bg"></div>
+                                                <div id="confirmation-amount" class="confirmation-total-bg">
+                                                    <p id="confirmation-total-text">Order Total</p>
+                                                    <p id="confirmation-grand-total"></p>
+                                                </div>
+
+                                                <div class="text-center d-grid">
+                                                    <button id="btn-start-new-order" class="btn" onclick="startNewOrder()" data-bs-dismiss="modal" aria-label="Start New Order">
+                                                        Start New Order
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>

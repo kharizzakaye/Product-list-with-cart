@@ -244,6 +244,84 @@ h1 {
     background-color: var(--rose900);
 }
 
+
+/* Modal */
+.modal-body {
+    padding: 30px;
+}
+
+#modal-image {
+    width: 30px;
+}
+
+#modal-title {
+    font-weight: 700;
+    font-size: 35px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+#modal-subtitle {
+    color: var(--rose500);
+}
+
+.confirmation-modal-bg {
+    background-color: var(--rose100);
+    padding: 10px 20px 10px 20px;
+}
+
+.confirmation-total-bg {
+    background-color: var(--rose100);
+    padding: 10px 20px 10px 20px;
+}
+
+#confirmation-total-text {
+    display: inline-block;
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+#confirmation-grand-total {
+    float: right;
+    font-weight: 700;
+    font-size: 25px;
+    margin-bottom: 0px
+}
+
+#confirmation-amount {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+#confirmation-image {
+   width: 80px;
+}
+
+.cart-item-line {
+    padding-top: 10px;
+}
+
+.cart-name {
+    margin-top: 0px;
+}
+
+.cart-subtotal {
+    float: right;
+}
+
+#btn-start-new-order {
+    background-color: var(--red);
+    color: var(--white);
+    border-radius: 50px;
+    margin-top: 20px;
+    font-weight: 600;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 20px;
+}
+
+
+
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
     
@@ -322,10 +400,6 @@ h1 {
     
     }
     
-    .add-cart-btn:hover {
-
-    }
-    
     /* Cart - sidebar */
     .card-body {
         padding: 30px;
@@ -375,6 +449,13 @@ h1 {
         padding-bottom: 10px;
         font-size: 18px;
     }
+
+    #btn-start-new-order {
+        margin-top: 20px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 18px;
+    }
 }
 
 /* Large devices (desktops, 992px and up) */
@@ -411,6 +492,13 @@ h1 {
     #confirm-order-btn {
         border-radius: 25px;
         display: none;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        font-size: 17px;
+    }
+
+    #btn-start-new-order {
+        margin-top: 20px;
         padding-top: 8px;
         padding-bottom: 8px;
         font-size: 17px;
