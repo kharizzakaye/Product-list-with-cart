@@ -191,6 +191,7 @@ function itemsDisplayOnCart()
 {
     let ordersList = document.getElementById("cart-information");
     let cartQuantity = document.getElementById("cart-quantity");
+    let grandTotal = document.getElementById("orders-total-amount");
 
     cartItemsDisplay =  "";
 
@@ -219,12 +220,15 @@ function itemsDisplayOnCart()
     ordersList.innerHTML = cartItemsDisplay;
 
     let calculateTotalQuantity = 0;
+    let grandTotalAmount = 0;
     cartItems.forEach(function(number) 
     {
         calculateTotalQuantity += number.quantity;
+        grandTotalAmount += number.subtotal;
     });
 
     cartQuantity.innerHTML = `(${calculateTotalQuantity})`;
+    grandTotal.innerHTML = `$${Number(grandTotalAmount).toFixed(2)}`;
 }
 
 
