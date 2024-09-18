@@ -233,6 +233,7 @@ function addToCart(buttonId)
 {
     let confirmOrderButton = document.getElementById("confirm-order-btn");
     let carbonNeutralSection = document.getElementById("carbon-neutral-section");
+    let totalAmountSection = document.getElementById("order-total-section");
 
     let selectedButton = document.getElementById(`btn-${buttonId}`);
     let selectedQuantityContainer = document.getElementById(`qty-container-${buttonId}`);
@@ -263,6 +264,7 @@ function addToCart(buttonId)
     {
         carbonNeutralSection.style.display = "none";
         confirmOrderButton.style.display = "none";
+        totalAmountSection.style.display = "none";
     }
     else // show cart items
     {
@@ -270,6 +272,7 @@ function addToCart(buttonId)
 
         carbonNeutralSection.style.display = "block";
         confirmOrderButton.style.display = "block";
+        totalAmountSection.style.display = "block";
     }
 }
 
@@ -283,6 +286,7 @@ function decreaseQuantity(buttonId)
     let ordersList = document.getElementById("cart-information");
     let confirmOrderButton = document.getElementById("confirm-order-btn");
     let carbonNeutralSection = document.getElementById("carbon-neutral-section");
+    let totalAmountSection = document.getElementById("order-total-section");
 
     newQuantity = Number(decreaseValue.textContent) - 1;
 
@@ -321,6 +325,7 @@ function decreaseQuantity(buttonId)
 
             carbonNeutralSection.style.display = "none";
             confirmOrderButton.style.display = "none";
+            totalAmountSection.style.display = "none";
         }
     }
     else
