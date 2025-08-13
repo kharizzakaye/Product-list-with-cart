@@ -3,37 +3,30 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        <link rel="icon" href="/assets/code-icon.png">
-
         <title>Desserts Shop</title>
-
+        <link rel="icon" href="/assets/code-icon.png">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-        <div class="container">
+        <main class="container">
             <div class="row">
-                <div class="col-xl-8">
+                <!-- Desserts List -->
+                <section class="col-xl-8" aria-label="Desserts">
                     <h1>Desserts</h1>
+                    <div class="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4" id="desserts-list"></div>
+                </section>
 
-                    <div class="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4" id="desserts-list">
-
-                    </div>
-
-                </div>
-
-                <div class="col-lg-4" id="cart-section">
+                <!-- Cart Sidebar -->
+                <aside class="col-lg-4" id="cart-section" aria-label="Cart">
                     <div class="card cart-section-card">
                         <div class="card-body">
-                            <p class="card-text cart-main-title">Your Cart <span class="cart-main-title" id="cart-quantity">(0)</span></p>
+                            <p class="card-text cart-main-title">
+                                Your Cart <span class="cart-main-title" id="cart-quantity">(0)</span>
+                            </p>
                             
                             <div id="cart-information">
-                                <div class="text-center" id="empty-cart-image">
-                                    <img src="/assets/images/illustration-empty-cart.svg" alt="">
-                                </div>
-                                
-                                <p class="card-text text-center img-fluid" id="empty-cart-text">Your added items will appear here</p>    
+                                <!-- Cart information injected here -->
                             </div>
 
                             <div>
@@ -53,6 +46,7 @@
                                     Confirm Order
                                 </a>
 
+                                <!-- Confirmation Modal -->
                                 <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
@@ -76,13 +70,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!-- End of modal -->
 
                             </div>
                         </div>
                     </div>
-                </div>
+                </aside>
             </div> 
-        </div>
+        </main>
 
         <script src="javascript/scripts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

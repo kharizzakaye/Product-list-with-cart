@@ -109,322 +109,190 @@ const data = [
      }
 ];
 
-let dessertsList = "";
-data.forEach( dessert => {
-    dessertsList += `
-        <div 
-            class="dessert-item-card" 
-            id="card-${dessert.id}"
-        >
+const dessertsListEl = document.querySelector("#desserts-list");
+const ordersListEl = document.getElementById("cart-information");
+const cartQuantityEl = document.getElementById("cart-quantity");
+const grandTotalEl = document.getElementById("orders-total-amount");
+const confirmOrderBtn = document.getElementById("confirm-order-btn");
+const carbonNeutralSection = document.getElementById("carbon-neutral-section");
+const totalAmountSection = document.getElementById("order-total-section");
+
+const emptyOrdersListHTML = `
+    <div class="text-center" id="empty-cart-image">
+        <img src="/assets/images/illustration-empty-cart.svg" alt="">
+    </div>
+    <p class="card-text text-center img-fluid" id="empty-cart-text">Your added items will appear here</p>
+`;
+
+let cartItems = [];
+
+// Render desserts
+const renderDesserts = () => {
+    dessertsListEl.innerHTML = data.map(dessert => `
+        <div class="dessert-item-card" id="card-${dessert.id}">
             <div>
-                <picture >
+                <picture>
                     <source media="(min-width: 992px)" srcset="${dessert.image.desktop}">
                     <source media="(min-width: 768px)" srcset="${dessert.image.tablet}">
                     <img id="picture-${dessert.id}" class="dessert-image img-fluid" src="${dessert.image.mobile}" alt="Image of ${dessert.name}">
                 </picture>
             </div>
-
             <div class="add-cart-btn-container text-center">
-                <button 
-                    class="btn btn-light add-cart-btn" 
-                    id="btn-${dessert.id}"
-                    value="0"
-                    onclick="addToCart('${dessert.id}')"
-                > 
-                    <div id=btn-text-${dessert.id}>
-                        <span><img src="/assets/images/icon-add-to-cart.svg" alt=""></span>
-                        Add to Cart
-                    </div>
+                <button class="btn btn-light add-cart-btn" id="btn-${dessert.id}" onclick="addToCart('${dessert.id}')">
+                    <span><img src="/assets/images/icon-add-to-cart.svg" alt=""></span>
+                    Add to Cart
                 </button>
-
                 <div class="quantityContainer" id="qty-container-${dessert.id}">
-                    <button 
-                        class="decreaseQuantity"
-                        id="btn-decrease-${dessert.id}"
-                        onclick="decreaseQuantity('${dessert.id}')"
-                    >
-                    -
-                    </button>
-
-                    <p 
-                        class="quantityText"
-                        id="qty-value-${dessert.id}"
-                        value="{
-                            'id': ${dessert.id},
-                            'name': ${dessert.name},
-                            'price': ${dessert.price},
-                            'image': ${dessert.image.desktop},
-                        }"
-                    >
-                    1
-                    </p>
-
-                    <button 
-                        class="increaseQuantity"
-                        id="btn-increase-${dessert.id}"
-                        onclick="increaseQuantity('${dessert.id}')"
-                    >
-                        +
-                    </button>
+                    <button class="decreaseQuantity" onclick="decreaseQuantity('${dessert.id}')">-</button>
+                    <span class="quantityText" id="qty-value-${dessert.id}">1</span>
+                    <button class="increaseQuantity" onclick="increaseQuantity('${dessert.id}')">+</button>
                 </div>
             </div>
-
             <div>
                 <p class="dessert-details food-type">${dessert.category}</p>
                 <p class="dessert-details food-name">${dessert.name}</p>
                 <p class="dessert-details food-price">$${Number(dessert.price).toFixed(2)}</p>
             </div>
         </div>
-
-        
-    `
-});
-
-document.querySelector("#desserts-list").innerHTML = dessertsList;
+    `).join('');
+};
+renderDesserts();
 
 
-
-let ordersList = document.getElementById("cart-information");
-let cartQuantity = document.getElementById("cart-quantity");
-let grandTotal = document.getElementById("orders-total-amount");
-let confirmOrderButton = document.getElementById("confirm-order-btn");
-let carbonNeutralSection = document.getElementById("carbon-neutral-section");
-let totalAmountSection = document.getElementById("order-total-section");
-
-const emptyOrdersList = `
-    <div class="text-center" id="empty-cart-image">
-        <img src="/assets/images/illustration-empty-cart.svg" alt="">
-    </div>
-
-    <p class="card-text text-center img-fluid" id="empty-cart-text">Your added items will appear here</p>
-`;
+const emptyCartDisplay = () => {
+    ordersListEl.innerHTML = emptyOrdersListHTML;
+};
+emptyCartDisplay();
 
 
-// Add to Cart
-let cartItems = [];
-
-function itemsDisplayOnCart()
-{
-    cartItemsDisplay =  "";
-
-    for (let i=0; i< cartItems.length; i++)
-    {
-        if (cartItems[i].quantity == undefined)
-        {
-            cartItems[i].quantity = 1;
-            cartItems[i].subtotal = cartItems[i].price;
-        }
+// Update cart display
+const updateCartDisplay = () => {
+    if (cartItems.length === 0) {
+        emptyCartDisplay();
+        cartQuantityEl.textContent = "(0)";
+        carbonNeutralSection.style.display = "none";
+        confirmOrderBtn.style.display = "none";
+        totalAmountSection.style.display = "none";
+        return;
     }
 
+    let cartHTML = "";
+    let totalQuantity = 0;
+    let totalAmount = 0;
 
-    cartItems.forEach( cartItem => {
-        cartItemsDisplay += `
+    cartItems.forEach(item => {
+        cartHTML += `
             <div class="cart-item-line">
-                <p class="cart-name">${cartItem.name}</p>
-                <p class="cart-quantity">${cartItem.quantity}x</p>
-                <p class="cart-price">@ $${Number(cartItem.price).toFixed(2)}</p>
-                <p class="cart-subtotal">$${Number(cartItem.subtotal).toFixed(2)}</p>
+                <p class="cart-name">${item.name}</p>
+                <p class="cart-quantity">${item.quantity}x</p>
+                <p class="cart-price">@ $${item.price.toFixed(2)}</p>
+                <p class="cart-subtotal">$${item.subtotal.toFixed(2)}</p>
                 <hr/>
             </div>
-        `
+        `;
+        totalQuantity += item.quantity;
+        totalAmount += item.subtotal;
     });
 
-    ordersList.innerHTML = cartItemsDisplay;
+    ordersListEl.innerHTML = cartHTML;
+    cartQuantityEl.textContent = `(${totalQuantity})`;
+    grandTotalEl.textContent = `$${totalAmount.toFixed(2)}`;
+    carbonNeutralSection.style.display = "block";
+    confirmOrderBtn.style.display = "block";
+    totalAmountSection.style.display = "block";
+};
 
-    let calculateTotalQuantity = 0;
-    let grandTotalAmount = 0;
-    cartItems.forEach(function(number) 
-    {
-        calculateTotalQuantity += number.quantity;
-        grandTotalAmount += number.subtotal;
+// Add to cart
+window.addToCart = (id) => {
+    const dessert = data.find(item => item.id === id);
+    if (!dessert) return;
+
+    // Prevent duplicate items
+    if (cartItems.some(item => item.id === id)) return;
+
+    cartItems.push({
+        ...dessert,
+        quantity: 1,
+        subtotal: dessert.price
     });
 
-    cartQuantity.innerHTML = `(${calculateTotalQuantity})`;
-    grandTotal.innerHTML = `$${Number(grandTotalAmount).toFixed(2)}`;
-}
+    document.getElementById(`btn-${id}`).style.display = "none";
+    document.getElementById(`qty-container-${id}`).style.display = "inline-block";
+    document.getElementById(`picture-${id}`).style.border = "3px solid hsl(14, 86%, 42%)";
+    document.getElementById(`qty-value-${id}`).textContent = "1";
 
+    updateCartDisplay();
+};
 
+// Decrease quantity
+window.decreaseQuantity = (id) => {
+    const itemIndex = cartItems.findIndex(item => item.id === id);
+    if (itemIndex === -1) return;
 
-function addToCart(buttonId) 
-{
-    let selectedButton = document.getElementById(`btn-${buttonId}`);
-    let selectedQuantityContainer = document.getElementById(`qty-container-${buttonId}`);
-    let quantityValue = document.getElementById(`qty-value-${buttonId}`);
-    let selectedImage = document.getElementById(`picture-${buttonId}`);
-
-    // hide add to cart button 
-    selectedButton.style.display = "none";
-
-    // show quantity buttons
-    selectedQuantityContainer.style.display = "inline-block";
-
-    // add border to selected food
-    selectedImage.style.border = "3px solid hsl(14, 86%, 42%)";
-
-    // set quantity to 1
-    quantityValue.innerHTML = "1";
-
-    // add item to cart
-    const itemDetails = data.filter(food => food.id === buttonId);
-    cartItems.push(itemDetails[0]);
-
-    // hide empty cart message
-    if ( cartItems.length == 0 )
-    {
-        carbonNeutralSection.style.display = "none";
-        confirmOrderButton.style.display = "none";
-        totalAmountSection.style.display = "none";
+    const item = cartItems[itemIndex];
+    if (item.quantity > 1) {
+        item.quantity -= 1;
+        item.subtotal = item.quantity * item.price;
+        document.getElementById(`qty-value-${id}`).textContent = item.quantity;
+    } else {
+        // Remove from cart
+        cartItems.splice(itemIndex, 1);
+        document.getElementById(`btn-${id}`).style.display = "inline-block";
+        document.getElementById(`qty-container-${id}`).style.display = "none";
+        document.getElementById(`picture-${id}`).style.border = "none";
     }
-    else // show cart items
-    {
-        itemsDisplayOnCart();
+    updateCartDisplay();
+};
 
-        carbonNeutralSection.style.display = "block";
-        confirmOrderButton.style.display = "block";
-        totalAmountSection.style.display = "block";
-    }
-}
+// Increase quantity
+window.increaseQuantity = (id) => {
+    const item = cartItems.find(item => item.id === id);
+    if (!item) return;
+    item.quantity += 1;
+    item.subtotal = item.quantity * item.price;
+    document.getElementById(`qty-value-${id}`).textContent = item.quantity;
+    updateCartDisplay();
+};
 
-function decreaseQuantity(buttonId)
-{
-    let decreaseValue = document.getElementById(`qty-value-${buttonId}`);
-    let selectedImage = document.getElementById(`picture-${buttonId}`);
-    let selectedButton = document.getElementById(`btn-${buttonId}`);
-    let selectedQuantityContainer = document.getElementById(`qty-container-${buttonId}`);
+// Confirm order modal
+window.confirmOrder = () => {
+    const confirmationList = document.getElementById("confirmation-modal-list");
+    const confirmationGrandTotal = document.getElementById("confirmation-grand-total");
 
-    newQuantity = Number(decreaseValue.textContent) - 1;
+    let confirmItemsHTML = "";
+    let total = 0;
 
-    // update styles
-    if (newQuantity == 0)
-    {
-        decreaseValue.innerHTML = newQuantity;
-
-        // remove border to selected food
-        selectedImage.style.border = "none";
-
-        // show add to cart button 
-        selectedButton.style.display = "inline-block";
-
-        // hide quantity buttons
-        selectedQuantityContainer.style.display = "none";
-
-        // remove item to cart
-        const removeToCart = cartItems.filter(function (food) {
-            return food.id !== buttonId;
-        });
-        cartItems = removeToCart;
-
-
-        itemsDisplayOnCart();
-
-        if (cartItems.length == 0)
-        {
-            ordersList.innerHTML = emptyOrdersList;
-
-            carbonNeutralSection.style.display = "none";
-            confirmOrderButton.style.display = "none";
-            totalAmountSection.style.display = "none";
-        }
-    }
-    else
-    {
-        decreaseValue.innerHTML = newQuantity;
-
-        const updateQuantity = cartItems.findIndex(any => { return any.id === buttonId; });
-        cartItems[updateQuantity].quantity = newQuantity;
-        cartItems[updateQuantity].subtotal = newQuantity * cartItems[updateQuantity].price;
-
-        itemsDisplayOnCart();
-    }
-}
-
-function increaseQuantity(buttonId)
-{
-    let increaseValue = document.getElementById(`qty-value-${buttonId}`);
-
-    newQuantity = Number(increaseValue.textContent) + 1;
-    increaseValue.innerHTML = newQuantity;
-
-    const updateQuantity = cartItems.findIndex(any => { return any.id === buttonId; });
-    cartItems[updateQuantity].quantity = newQuantity;
-    cartItems[updateQuantity].subtotal = newQuantity * cartItems[updateQuantity].price;
-
-    itemsDisplayOnCart();
-}
-
-function confirmOrder()
-{
-    let confirmationList = document.getElementById("confirmation-modal-list");
-    let confirmationGrandTotal = document.getElementById("confirmation-grand-total");
-    let confirmItemsDisplay =  "";
-
-    cartItems.forEach( cartItem => {
-        confirmItemsDisplay += `
-             <div class="row cart-item-line">
+    cartItems.forEach(item => {
+        confirmItemsHTML += `
+            <div class="row cart-item-line">
                 <div class="col-4" id="confirmation-image">
-                    <img class="img-fluid" src="${cartItem.image.desktop}" alt="">
+                    <img class="img-fluid" src="${item.image.desktop}" alt="">
                 </div>
-
-                <div class="col ">
-                    <p class="cart-name">${cartItem.name}</p>
-                    <p class="cart-quantity">${cartItem.quantity}x</p>
-                    <p class="cart-price">@ $${Number(cartItem.price).toFixed(2)}</p>
+                <div class="col">
+                    <p class="cart-name">${item.name}</p>
+                    <p class="cart-quantity">${item.quantity}x</p>
+                    <p class="cart-price">@ $${item.price.toFixed(2)}</p>
                 </div>
-
                 <div class="col-2">
-                    <p class="cart-subtotal">$${Number(cartItem.subtotal).toFixed(2)}</p>
+                    <p class="cart-subtotal">$${item.subtotal.toFixed(2)}</p>
                 </div>
             </div>
-
             <hr/>
-        `
+        `;
+        total += item.subtotal;
     });
 
-    confirmationList.innerHTML = confirmItemsDisplay;
+    confirmationList.innerHTML = confirmItemsHTML;
+    confirmationGrandTotal.textContent = `$${total.toFixed(2)}`;
+};
 
-
-    let confirmationGrandTotalAmount = 0;
-    cartItems.forEach(function(number) 
-    {
-        confirmationGrandTotalAmount += number.subtotal;
+// Start new order
+window.startNewOrder = () => {
+    cartItems.forEach(item => {
+        document.getElementById(`btn-${item.id}`).style.display = "inline-block";
+        document.getElementById(`qty-container-${item.id}`).style.display = "none";
+        document.getElementById(`picture-${item.id}`).style.border = "none";
     });
-
-    confirmationGrandTotal.innerHTML = `$${Number(confirmationGrandTotalAmount).toFixed(2)}`;
-}
-
-function startNewOrder()
-{
-    let selectedButton;
-    let selectedQuantityContainer;
-    let quantityValue;
-    let selectedImage;
-
-    // reset selections and cart
-    for (let i=0; i<cartItems.length; i++)
-    {
-        selectedButton = document.getElementById(`btn-${cartItems[i].id}`);
-        selectedQuantityContainer = document.getElementById(`qty-container-${cartItems[i].id}`);
-        quantityValue = document.getElementById(`qty-value-${cartItems[i].id}`);
-        selectedImage = document.getElementById(`picture-${cartItems[i].id}`);
-
-        // remove border to selected food
-        selectedImage.style.border = "none";
-
-        // show add to cart button 
-        selectedButton.style.display = "inline-block";
-
-        // hide quantity buttons
-        selectedQuantityContainer.style.display = "none";
-
-    }
-
     cartItems = [];
-
-    cartItemsDisplay = [];
-    ordersList.innerHTML = emptyOrdersList;
-
-    cartQuantity.innerHTML = "(0)"
-    carbonNeutralSection.style.display = "none";
-    confirmOrderButton.style.display = "none";
-    totalAmountSection.style.display = "none";
-}
+    updateCartDisplay();
+};
